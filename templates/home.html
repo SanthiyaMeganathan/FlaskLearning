@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% import 'macros.html' as element %}
+
+{% block content %}
+
+    {{ element.title("Home") }}
+
+    <h1>This is Home page</h1>
+    <p>Welcome to the home page of our Flask application!</p>
+
+    {% include "channel.html"%}
+
+
+    <h2> {{language }}</h2>
+    {% if language == 'python' %}
+    <p>This is a python project</p>
+    {% elif language == 'javascript' %}
+    <p> This is the JavaScript Project </p>
+    {% else %}
+    <p> this is a diffrent project </p>
+    {% endif %}
+    <h2>{{projectname}}</h2>
+    <h2>{{number}}</h2>
+    <ul>
+        {% for num in number %}
+        <li>This is a number {{num}}</li>   
+        {% endfor %}
+    </ul>
+{% endblock %}    

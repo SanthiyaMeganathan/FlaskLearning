@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% import 'macros.html' as element %}
+
+{% block content %}
+
+    {{ element.title("Contact page...........") }}
+
+    <form action="">
+        {{ element.input_field('username', placeholder='Enter your username') }}
+        {{ element.input_field('userpassword', placeholder='Enter your password' , type='password') }}
+        {{ element.input_field(name='fullname', placeholder='enter your fullname' , type='text') }}
+    </form>
+
+    {% call element.card "jone", "deveveloper"%}
+
+{% endblock%}
