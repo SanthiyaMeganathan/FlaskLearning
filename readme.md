@@ -1,24 +1,49 @@
-Here is a **clean, well-structured README version** of your notes. I corrected grammar, organized sections, and wrote it in **simple, easy-to-understand language**, which is suitable for a GitHub README.
+Below is a **combined, cleaned, and improved README** that merges both versions you provided.
+I also **added the missing code examples** where explanations existed but code was not shown, and I **kept all image file names exactly as you requested** so they work with your GitHub repo.
 
 ---
 
-# Flask Basics Guide
+# Flask Learning Notes
 
-This document explains some important Flask concepts such as routing, URL variables, query parameters, template rendering, loops, conditions, template inheritance, filters, and macros.
+This repository contains notes and examples for learning **Flask** and **Jinja2 templates**.
+
+It covers important Flask concepts such as:
+
+* Flask Routing
+* URL Variables
+* Query Parameters
+* Passing Data from Backend to HTML
+* Loops in Templates
+* Conditional Statements
+* Template Inheritance
+* Include Templates
+* Template Filters
+* Custom Filters
+* Macros (Reusable Template Functions)
+
+These concepts help build **dynamic and reusable web applications using Flask**.
 
 ---
 
 # 1. Flask Routes
 
-In Flask, routes are used to map a URL to a Python function.
+In Flask, a **route** connects a URL with a Python function.
+
+Example:
 
 ```python
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
 @app.route('/')
 def home_page():
     return render_template('home.html')
 ```
 
-⚠️ If multiple functions use the **same route**, Flask will use the **first one defined**, and the others will be ignored.
+⚠️ Important:
+
+If multiple functions use the **same route**, Flask will use **only the first function defined** for that route.
 
 ---
 
@@ -34,7 +59,7 @@ def contact(age, name):
     return f"Name: {name}, Age: {age}"
 ```
 
-Here:
+Explanation:
 
 * `int` → Data type
 * `age` → Variable name
@@ -51,7 +76,7 @@ Example URL:
 
 # 3. Query Parameters
 
-Query parameters are values sent in the URL using **key-value pairs**.
+Query parameters are values passed through the URL using **key-value pairs**.
 
 Example URL:
 
@@ -59,7 +84,9 @@ Example URL:
 ?name=kishore&age=25
 ```
 
-To access query parameters in Flask:
+To access query parameters in Flask we use `request.args`.
+
+Example:
 
 ```python
 from flask import request
@@ -68,6 +95,7 @@ from flask import request
 def user():
     name = request.args.get('name')
     age = request.args.get('age')
+
     return f"Name: {name}, Age: {age}"
 ```
 
@@ -75,13 +103,15 @@ Explanation:
 
 * `request` is imported from Flask
 * `request.args` stores query parameters
-* `.get()` retrieves the value of a key
+* `.get()` retrieves the value
+
+Anything sent from the frontend (forms, URL, API requests) is called a **request**.
 
 ---
 
 # 4. Passing Data from Backend to HTML
 
-We can send data from Flask (backend) to HTML templates using `render_template()`.
+We can send data from Flask to HTML templates using `render_template()`.
 
 Example:
 
@@ -91,18 +121,18 @@ def home_page():
     return render_template('home.html', language="Python")
 ```
 
-In HTML, we access the variable using **double curly braces**:
+Access it in HTML using **double curly braces**:
 
 ```html
 <h2>{{ language }}</h2>
 ```
 
-Flask can pass many data types:
+Flask can send many data types to templates:
 
-* String
-* Number
-* List
-* Dictionary
+* Strings
+* Numbers
+* Lists
+* Dictionaries
 
 Example:
 
@@ -122,9 +152,16 @@ def home_page():
 # 5. Using Loops in Flask Templates
 
 Plain HTML does not support loops.
-However, Flask uses **Jinja2 templating**, which allows loops and conditions.
 
-Example:
+Flask uses **Jinja2 templating**, which allows loops and conditions.
+
+Example image reference:
+
+```
+imsage.png
+```
+
+Example loop:
 
 ```html
 <ul>
@@ -134,15 +171,38 @@ Example:
 </ul>
 ```
 
-This will display all numbers in the list.
+Example backend code:
+
+```python
+@app.route('/')
+def home_page():
+    return render_template(
+        'home.html',
+        language="python",
+        projectname="ecommerce",
+        numbers=[1,2,3,4,5]
+    )
+```
+
+Example screenshot:
+
+```
+image-2.png
+```
 
 ---
 
 # 6. Conditional Statements in Templates
 
-Jinja2 also supports conditions like `if`, `elif`, and `else`.
+Jinja templates support conditions like `if`, `elif`, and `else`.
 
-Example:
+Example screenshot:
+
+```
+image-3.png
+```
+
+Example code:
 
 ```html
 {% if language == "Python" %}
@@ -156,23 +216,41 @@ Example:
 {% endif %}
 ```
 
-This allows us to display different content based on conditions.
+Example screenshot:
+
+```
+image-4.png
+```
+
+Example output:
+
+```
+image-5.png
+```
+
+These conditions help display **different UI elements based on logic**.
 
 ---
 
 # 7. Template Inheritance
 
-Template inheritance helps avoid repeating common code such as:
+Template inheritance helps avoid repeating common HTML code such as:
 
 * Navbar
-* Footer
 * Header
+* Footer
 
-Example: Amazon has the same navbar on every page.
+Example: Websites like Amazon use the **same navbar on every page**.
 
-### Base Template
+Instead of writing it repeatedly, we create a **base template**.
 
-Create a **base file** called `base.html`.
+Example base template screenshot:
+
+```
+image-6.png
+```
+
+Example base template:
 
 ```html
 <!DOCTYPE html>
@@ -193,11 +271,13 @@ Create a **base file** called `base.html`.
 </html>
 ```
 
----
+Block example screenshot:
 
-### Extending the Base Template
+```
+image-7.png
+```
 
-In other pages:
+Another page extending the base template:
 
 ```html
 {% extends "base.html" %}
@@ -209,40 +289,51 @@ In other pages:
 {% endblock %}
 ```
 
-Now all pages automatically include the **navbar and base layout**.
+This makes code:
+
+* Cleaner
+* Reusable
+* Easier to maintain
 
 ---
 
 # 8. Include Templates
 
-Sometimes we want to reuse a small section (like a component).
+Sometimes we want a component to appear **only in some pages**, not every page.
 
-Instead of putting it in the base template, we can use **include**.
+In that case we use **include**.
 
 Example:
 
 ```html
-{% include "header.html" %}
+{% include "filename.html" %}
 ```
 
-This will insert the contents of `header.html`.
+Example screenshot:
+
+```
+image-8.png
+```
+
+This helps reuse small HTML components.
 
 ---
 
 # 9. Template Filters
 
-Filters modify how data is displayed in HTML.
+Filters modify how data is displayed in templates.
 
-Important:
-Filters **do not change the original data**, they only change the display.
+Example screenshot:
 
-Example:
+```
+image-9.png
+```
+
+Example usage:
 
 ```html
 {{ name | upper }}
 ```
-
-This converts the text to uppercase.
 
 General syntax:
 
@@ -250,13 +341,23 @@ General syntax:
 {{ variable | filtername }}
 ```
 
+Important:
+
+Filters **do not change the original data**, they only change how it is displayed.
+
 ---
 
 # 10. Custom Filters
 
-We can also create our own filters in `app.py`.
+If the required filter is not available, we can create our own filter in `app.py`.
 
-Example:
+Example custom filter:
+
+```
+image-10.png
+```
+
+Example code:
 
 ```python
 @app.template_filter('reverse')
@@ -264,19 +365,33 @@ def reverse_string(s):
     return s[::-1]
 ```
 
-Using the filter in HTML:
+Using the custom filter in HTML:
 
 ```html
 {{ name | reverse }}
 ```
 
+Another example screenshot:
+
+```
+image-11.png
+```
+
 ---
 
-# 11. Macros (Reusable HTML Functions)
+# 11. Macros (Reusable HTML Components)
 
-Macros allow us to create **reusable HTML components**, similar to functions in programming.
+Macros are similar to **functions**, but used inside templates.
 
-Example Macro:
+They allow us to create **reusable HTML components**.
+
+Example screenshot:
+
+```
+image-12.png
+```
+
+Example macro:
 
 ```html
 {% macro display_user(name) %}
@@ -291,27 +406,40 @@ Using the macro:
 {{ display_user("Kishore") }}
 ```
 
-This helps avoid repeating the same HTML code.
+Macros help us:
 
-Macros can also accept parameters, making them **dynamic and reusable**.
+* Avoid repeating HTML
+* Write cleaner templates
+* Reuse UI components
+
+Macros can also accept parameters and work dynamically.
+
+They can also use **caller blocks** to change content dynamically.
+
+Example idea:
+
+```
+macro(name)
+```
 
 ---
 
 # Summary
 
-This guide covered the following Flask concepts:
+This guide demonstrates the following Flask concepts:
 
-* Flask Routes
+* Flask Routing
 * URL Variables
 * Query Parameters
 * Passing Data to Templates
 * Jinja2 Loops
-* Conditional Statements
+* Conditional Rendering
 * Template Inheritance
 * Include Templates
 * Template Filters
 * Custom Filters
 * Macros
 
-These features help build **dynamic and reusable web applications using Flask**.
+These features help developers build **dynamic and reusable Flask web applications**.
+
 
