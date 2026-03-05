@@ -438,4 +438,58 @@ This guide demonstrates the following Flask concepts:
 
 These features help developers build **dynamic and reusable Flask web applications**.
 
+static files and bootstarp:
+to have css,js,img,vdo .. we use this to store this kind of things..
 
+since we have inheritance in the flask, we can just to base file(html) so that if any other html file inherites the base file will have that css.
+![alt text](image-13.png)
+
+example of the image which shows how it looks after we applied the style;
+
+syntax for importing the file from the static folders.
+    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+
+using the js in the static and oupt :
+![alt text](image-14.png)
+
+put it in the end od thebody before that body tag closes..
+
+       <script src="{{url_for('static',filename='js/test.js')}}"></script>
+used the image and got output:
+![alt text](image-15.png)
+    <img src="{{url_for('static' , filename='images/orange.jpg.jpg')}}" alt="orange image">
+
+    code to use it , we have used this in the home page only..!
+
+
+bootstrap  :
+
+got this from bootstarp website :
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+copy the first cdn , which is for the css.
+
+
+we are using it in base.
+
+when we have our own stylesheets and while we are using the bootstrap we need to put our css below the bootstrap.
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+same for js.
+
+<div class="card" style="width: 18rem;">
+  <img src="..." class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+
+got it from bootstrap website . docs/card..
+
+![alt text](image-16.png)
+card used output..
+
+used the code in the page i wannted to have this card , and used my own image alt text , cause they wont give any text by their own
