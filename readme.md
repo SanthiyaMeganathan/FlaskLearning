@@ -1,7 +1,3 @@
-Below is a **combined, cleaned, and improved README** that merges both versions you provided.
-I also **added the missing code examples** where explanations existed but code was not shown, and I **kept all image file names exactly as you requested** so they work with your GitHub repo.
-
----
 
 # Flask Learning Notes
 
